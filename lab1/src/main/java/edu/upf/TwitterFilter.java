@@ -13,7 +13,7 @@ public class TwitterFilter {
         String language = argsList.get(0);
        
         String outputFile = argsList.get(1);
-       
+       //change 
         String bucket = argsList.get(2);
         System.out.println("Language: " + language + ". Output file: " + outputFile + ". Destination bucket: " + bucket);
         for(String inputFile: argsList.subList(3, argsList.size())) {
