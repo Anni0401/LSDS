@@ -18,14 +18,14 @@ public class FileLanguageFilter implements LanguageFilter{
     }
     @Override
     public void filterLanguage(String language) throws Exception {
-        try(FileReader fr = new FileReader(inputFile);
+        try(FileReader fr = new FileReader(this.inputFile);
             BufferedReader br = new BufferedReader(fr);
-            FileWriter fw = new FileWriter(outputFile);
+            FileWriter fw = new FileWriter(this.outputFile);
             BufferedWriter bw = new BufferedWriter(fw);) {
                 
                 String jsonLine = "1";
                 while ((jsonLine = br.readLine()) != null){
-                System.out.println(jsonLine);
+                
                 Optional<SimplifiedTweet> optionalTweet =  SimplifiedTweet.fromJson(jsonLine);
                 if (optionalTweet.isPresent()){
                 SimplifiedTweet tweet = optionalTweet.get();
