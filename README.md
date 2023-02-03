@@ -2,5 +2,5 @@
 Seed for labs
 
 To run:
-mvn package
-java -cp target/{nom}-1.0-SNAPSHOT.jar edu.upf.TwitterFilter es output.txt bucket file_dir file2_dir
+1- mvn package
+2- java -cp target/lab1-1.0-SNAPSHOT.jar edu.upf.TwitterFilter es output.txt bucket file_dir file2_dir
