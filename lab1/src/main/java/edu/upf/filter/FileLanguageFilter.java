@@ -18,9 +18,9 @@ public class FileLanguageFilter implements LanguageFilter{
     }
     @Override
     public void filterLanguage(String language) throws Exception {
-        try(FileReader fr = new FileReader(this.inputFile);
+        try(FileReader fr = new FileReader(inputFile);
             BufferedReader br = new BufferedReader(fr);
-            FileWriter fw = new FileWriter(this.outputFile);
+            FileWriter fw = new FileWriter(outputFile);
             BufferedWriter bw = new BufferedWriter(fw);) {
                 
                 String jsonLine = "1";
@@ -35,7 +35,11 @@ public class FileLanguageFilter implements LanguageFilter{
                 }
             }
         }
-
+        br.close();
+        bw.close();
+    }  catch(Exception e){
+        e.printStackTrace();
+        throw e; 
     }
         
     }
