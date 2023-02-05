@@ -1,40 +1,47 @@
 package edu.upf.uploader;
 
 import java.util.List;
+import java.io.File;
 
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-/*Don't know how to initialize an Amazon client using AWS -> ~/.aws/credentials]
-[default]
-    aws_access_key_id = YOUR_ACCESS_KEY
-    aws_secret_access_key = YOUR_SECRET_KEY
-
-    System.setProperty("aws.accessKeyId", "YOUR_ACCESS_KEY");
-    System.setProperty("aws.secretKey", "YOUR_SECRET_KEY");
-*/
-
 
 public class S3Uploader implements Uploader {
 
-    final String inputFile;
     final String bucketName;
     final String prefix;
     private AmazonS3 s3Client;
 
-    public S3Uploader(String inputFile, String bucketName, String prefix){
-        this.inputFile = inputFile;
+    public S3Uploader(String bucketName, String prefix, AmazonS3 s3client){
         this.bucketName = bucketName;
         this.prefix = prefix;
-        this.s3Client = AmazonS3ClientBuilder.defaultClient();
+        AmazonS3 credentials = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+        this.s3Client = credentials;
     }
-    @Override
 
+    public boolean ExistingBucket(){
+
+        if (s3Client.doesBucketExistV2(bucketName)){
+            return true;
+        } else {
+            s3Client.createBucket(bucketName);
+            return true;
+        }
+    }
+
+    @Override
     public void upload(List<String> files) {
-        for (String file:files){
-            PutObjectRequest request = new PutObjectRequest(bucketName, prefix, file);
-            s3Client.putObject(request);
+        if (ExistingBucket() == false){
+            System.out.println("The bucket does not exist");
+        } else {
+            for (String file:files){
+                File uploadingfile = new File(file);
+                PutObjectRequest request = new PutObjectRequest(bucketName, prefix + uploadingfile.getName(), new File(file));
+                s3Client.putObject(request);
+            }
         }
     }
 }
