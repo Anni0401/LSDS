@@ -20,27 +20,29 @@ public class TwitterFilterTest
     @Test
     public void testParseTweet()
     {
-        String jsonString  = "{\"id\":0001,\"text\":\"no me gusta el chocolate\",\"user\":{\"id\":888,\"name\":\"ali\"},\"lang\":\"es\",\"timestamp_ms\":\"10001002\"}";
-        SimplifiedTweet test = new SimplifiedTweet(00001, "no me gusta el chocolate", 888, "ali", "es", 10001002);
+        String jsonString  = "{\"id\":1,\"text\":\"no me gusta el chocolate\",\"user\":{\"id\":888,\"name\":\"ali\"},\"lang\":\"es\",\"timestamp_ms\":\"10001002\"}";
+        SimplifiedTweet test = new SimplifiedTweet(1, "no me gusta el chocolate", 888, "ali", "es", 10001002);
         Optional<SimplifiedTweet>  compare= SimplifiedTweet.fromJson(jsonString);
 
         assertEquals( test, compare.get());
     }
+    @Test
     public void testParseInvalidTweet()
     {
         String jsonString  = "{\"id\":0001,\"text\":\"no me gusta el chocolate\",\"user\":{\"id\":888,\"name\":\"ali\",\"lang\":\"es\",\"timestamp_ms\":\"10001002\"}";
         
         Optional<SimplifiedTweet>  compare= SimplifiedTweet.fromJson(jsonString);
 
-        assertEquals( Optional.empty(), compare.get());
+        assertEquals( Optional.empty(), compare);
     }
+    @Test
     public void testParseIncompleteTweet()
     {
         String jsonString  = "{\"id\":0001,\"user\":{\"id\":888,\"name\":\"ali\",\"lang\":\"es\",\"timestamp_ms\":\"10001002\"}";
         
         Optional<SimplifiedTweet>  compare= SimplifiedTweet.fromJson(jsonString);
 
-        assertEquals(Optional.empty(), compare.get());
+        assertEquals(Optional.empty(), compare);
     }
 
 
