@@ -24,6 +24,7 @@ public class FileLanguageFilter implements LanguageFilter{
             BufferedWriter bw = new BufferedWriter(fw);) {
                 
                 String jsonLine = "1";
+                int count = 0;
                 while ((jsonLine = br.readLine()) != null){
                 
                 Optional<SimplifiedTweet> optionalTweet =  SimplifiedTweet.fromJson(jsonLine);
@@ -31,12 +32,16 @@ public class FileLanguageFilter implements LanguageFilter{
                 SimplifiedTweet tweet = optionalTweet.get();
                 if (tweet.getLanguage().equals(language)){
                     bw.write(tweet.toString());
+                    bw.newLine();
+                    count++;
 
                 }
             }
         }
+        System.out.println("number of tweets: " + count);
         br.close();
         bw.close();
+
     }  catch(Exception e){
         e.printStackTrace();
         throw e; 

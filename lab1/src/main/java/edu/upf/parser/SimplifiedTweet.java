@@ -60,7 +60,7 @@ public class SimplifiedTweet {
     JsonElement timestampEle = jo.get("timestamp_ms");
     long timestampMs = (long) timestampEle.getAsLong();
 
-    JsonElement user = jo.get("user");
+   
 
     JsonElement userIdEle = jo.getAsJsonObject("user").get("id");
     long userId = (long) userIdEle.getAsLong();
