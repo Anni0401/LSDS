@@ -20,7 +20,7 @@ public class FileLanguageFilter implements LanguageFilter{
     public void filterLanguage(String language) throws Exception {
         try(FileReader fr = new FileReader(inputFile);
             BufferedReader br = new BufferedReader(fr);
-            FileWriter fw = new FileWriter(outputFile);
+            FileWriter fw = new FileWriter(outputFile, true);
             BufferedWriter bw = new BufferedWriter(fw);) {
                 
                 String jsonLine = "1";
